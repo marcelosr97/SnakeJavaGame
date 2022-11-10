@@ -5,21 +5,19 @@ import java.awt.event.KeyListener;
 
 public class KeyListenerImpl implements KeyListener {
     private Snake snake;
-    public KeyListenerImpl(Snake snake) {
+    public KeyListenerImpl(Snake snake)
+    {
         this.snake = snake;
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
-        this.snake.moveSnake(e);
+        this.snake.getDirection(e);
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
+    public void keyReleased(KeyEvent e) {}
 }
