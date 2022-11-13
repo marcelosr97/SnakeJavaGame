@@ -1,11 +1,13 @@
 package panel;
 
+import entities.Snake;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyListenerImpl implements KeyListener {
     private Snake snake;
-    public KeyListenerImpl(Snake snake)
+    public KeyListenerImpl(Paint paint, Snake snake)
     {
         this.snake = snake;
     }
@@ -15,7 +17,7 @@ public class KeyListenerImpl implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        this.snake.getDirection(e);
+        this.snake.setDirection(e);
     }
 
     @Override
