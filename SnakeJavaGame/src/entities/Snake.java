@@ -11,8 +11,8 @@ public class Snake
     /* Minimum snake length */
     private static final int MIN_SNAKE_LENGTH = 3;
     /* Public variables */
-    public final int SNAKE_WIDTH = 16;
-    public final int SNAKE_HEIGHT = 16;
+    public final int SNAKE_WIDTH = 32;
+    public final int SNAKE_HEIGHT = 32;
     public int length = MIN_SNAKE_LENGTH;
     public int[][] pos = new int[MAX_SNAKE_LENGTH][2];
     public int direction = KeyEvent.VK_UP;

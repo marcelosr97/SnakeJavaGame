@@ -24,7 +24,7 @@ public class Paint extends JComponent
         /* Set color white */
         g.setColor(Color.WHITE);
         /* Draw border */
-        g.drawRect(this.frame.FRAME_OFFSET,this.frame.FRAME_OFFSET,this.frame.MAX_X, this.frame.MAX_X);
+        g.drawRect(this.frame.FRAME_OFFSET,this.frame.FRAME_OFFSET,this.frame.MAX_X, this.frame.MAX_Y);
         /* Set color green */
         g.setColor(Color.GREEN);
         /* Print snake */
@@ -36,6 +36,6 @@ public class Paint extends JComponent
         /* Set color red */
         g.setColor(Color.RED);
         /* Print food */
-        g.fillRect(this.food.xPos, this.food.yPos, 16, 16);
+        g.fillRect(this.food.xPos, this.food.yPos, this.food.FOOD_WIDTH, this.food.FOOD_HEIGHT);
     }
 }

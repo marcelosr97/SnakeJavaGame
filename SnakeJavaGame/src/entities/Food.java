@@ -6,13 +6,17 @@ import java.util.Random;
 
 public class Food
 {
+    /* Private */
     private static final int UPPER_BOUND = 16;
     private static final int MAX_POSITION = 32;
     private Random rand = new Random();
-    public int xPos;
-    public int yPos;
     private Frame frame;
     private Snake snake;
+    /* Public */
+    public final int FOOD_WIDTH = 32;
+    public final int FOOD_HEIGHT = 32;
+    public int xPos;
+    public int yPos;
 
     public Food(Frame frame, Snake snake)
     {

@@ -26,6 +26,7 @@ public class Frame extends JFrame
         this.jFrame.addKeyListener(keyInputs);
         this.jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); /* Close operation */
         this.jFrame.setVisible(true); /* Show frame */
+        /* Set the final size */
         this.jFrame.setSize(MAX_X + 2*FRAME_OFFSET + this.jFrame.getInsets().left + this.jFrame.getInsets().right,
                 MAX_Y + 2*FRAME_OFFSET + this.jFrame.getInsets().top + this.jFrame.getInsets().bottom);
     }

@@ -6,6 +6,7 @@ import entities.Food;
 
 public class Task extends Thread
 {
+    private static final int REFRESH_RATE = 15;
     private Paint paint;
     private Food food;
     private Snake snake;
@@ -29,9 +30,9 @@ public class Task extends Thread
             this.snake.updateSlots();
             /* Repaint */
             this.paint.repaint();
-            /* Sleep 50 ms */
+            /* Sleep */
             try {
-                Thread.currentThread().sleep(50);
+                Thread.currentThread().sleep(1000/REFRESH_RATE);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
