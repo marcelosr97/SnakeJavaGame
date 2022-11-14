@@ -1,11 +1,8 @@
 import entities.Snake;
 import entities.Food;
-import panel.KeyListenerImpl;
 import panel.Paint;
 import panel.Frame;
 import task.Task;
-
-import java.awt.*;
 
 public class Main
 {
@@ -18,12 +15,10 @@ public class Main
         Food food = new Food(frame, snake);
         /* Create paint object */
         Paint paint = new Paint(snake, food, frame);
-        /* Key listener */
-        KeyListenerImpl keyListener = new KeyListenerImpl(paint, snake);
         /* Configure frame */
-        frame.configureFrame(paint, keyListener);
+        frame.configureFrame(paint);
         /* Create task object */
-        Task task = new Task(paint, snake, food);
+        Task task = new Task(paint, snake, food, frame);
         /* Start task */
         task.start();
 

@@ -32,21 +32,9 @@ public class Snake
         pos[2][1] = this.frame.FRAME_OFFSET+128;
     }
 
-    public void setDirection(KeyEvent e)
+    public void setDirection(int direction)
     {
-        if((e.getKeyCode() == KeyEvent.VK_UP) || (e.getKeyCode() == KeyEvent.VK_RIGHT)
-            || (e.getKeyCode() == KeyEvent.VK_LEFT) || (e.getKeyCode() == KeyEvent.VK_DOWN))
-        {
-            /* Check whether the following movement is transverse */
-            if((this.direction != e.getKeyCode()+2) && (this.direction != e.getKeyCode()-2))
-            {
-                this.direction = e.getKeyCode();
-            }
-        }
-        else
-        {
-            /* Do nothing */
-        }
+       this.direction = direction;
     }
 
     public void updateSlots()

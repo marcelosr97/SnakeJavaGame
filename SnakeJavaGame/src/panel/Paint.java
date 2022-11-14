@@ -8,17 +8,42 @@ import java.awt.*;
 
 public class Paint extends JComponent
 {
+    /* Private */
     private Frame frame;
     private Snake snake;
     private Food food;
+    private TypeWindow currentWindow;
+    /* Public */
+    public enum TypeWindow {START, GAME, END};
     public Paint(Snake snake, Food food, Frame frame)
     {
+        this.currentWindow = TypeWindow.START;
         this.frame = frame;
         this.food = food;
         this.snake = snake;
     }
 
     public void paintComponent(Graphics g)
+    {
+        switch(currentWindow)
+        {
+            case START:
+                printStartWindow(g);
+                break;
+            case GAME:
+                printGameWindow(g);
+                break;
+            case END:
+                printEndWindow(g);
+        }
+    }
+
+    private void printEndWindow(Graphics g)
+    {
+
+    }
+
+    private void printGameWindow(Graphics g)
     {
         /* Draw border */
         /* Set color white */
@@ -37,5 +62,15 @@ public class Paint extends JComponent
         g.setColor(Color.RED);
         /* Print food */
         g.fillRect(this.food.xPos, this.food.yPos, this.food.FOOD_WIDTH, this.food.FOOD_HEIGHT);
+    }
+
+    private void printStartWindow(Graphics g)
+    {
+
+    }
+
+    public void setWindows(TypeWindow typeWindow)
+    {
+        this.currentWindow = typeWindow;
     }
 }
