@@ -18,14 +18,14 @@ public class Frame extends JFrame implements ActionListener {
     public int snakeDir = KeyEvent.VK_UP;
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
     /* Public */
-    public final int FRAME_OFFSET = 32;
-    public final int MAX_X = 512;
-    public final int MAX_Y = 512;
+    public static final int FRAME_OFFSET = 32;
+    public static final int MAX_X = 512;
+    public static final int MAX_Y = 512;
     public FrameType currentFrame;
     private static JLabel keyInput = new JLabel();
 
     public Frame() {
-        this.currentFrame = START;
+        currentFrame = START;
     }
 
     public void configureFrame(Paint paint) {
@@ -61,7 +61,8 @@ public class Frame extends JFrame implements ActionListener {
 
     }
 
-    public void configureStartFrame() {
+    public void configureStartFrame()
+    {
         this.startButton = new JButton("START");
         this.startButton.addActionListener(this);
         this.startButton.setFocusable(false);

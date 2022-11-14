@@ -6,49 +6,41 @@ import java.util.Random;
 
 public class Food
 {
-    /* Private */
+    /* Private constants */
     private static final int UPPER_BOUND = 16;
     private static final int MAX_POSITION = 32;
-    private Random rand = new Random();
-    private Frame frame;
-    private Snake snake;
-    /* Public */
-    public final int FOOD_WIDTH = 32;
-    public final int FOOD_HEIGHT = 32;
+    /* Public constants */
+    public static final int FOOD_WIDTH = 32;
+    public static final int FOOD_HEIGHT = 32;
+    /* Public variables */
     public int xPos;
     public int yPos;
+    /* Private variables */
+    private Random rand = new Random();
 
-    public Food(Frame frame, Snake snake)
-    {
-        this.snake = snake;
-        this.frame = frame;
-        generatePosition();
-    }
-
-    public void generatePosition()
+    public void generatePosition(int[][] snakePos, int snakeLength)
     {
         /* Create flag to check if the position is valid */
         boolean posValid = false;
-
         do
         {
             /* Generate random position */
-            xPos = this.frame.FRAME_OFFSET + rand.nextInt(UPPER_BOUND)*MAX_POSITION;
-            yPos = this.frame.FRAME_OFFSET + rand.nextInt(UPPER_BOUND)*MAX_POSITION;
+            xPos = Frame.FRAME_OFFSET + rand.nextInt(UPPER_BOUND)*MAX_POSITION;
+            yPos = Frame.FRAME_OFFSET + rand.nextInt(UPPER_BOUND)*MAX_POSITION;
             /* Check is new position is valid */
-            posValid = checkPositionValid(xPos, yPos);
+            posValid = checkPositionValid(xPos, yPos, snakePos, snakeLength);
         } while(posValid != true);
 
 
     }
 
-    private boolean checkPositionValid(int x, int y)
+    private boolean checkPositionValid(int xPos, int yPos, int[][] snakePos, int snakeLength)
     {
         boolean valid = true;
         /* Loop to check if the new position is equal to one slot */
-        for(int posIndex = 0; posIndex < this.snake.length; posIndex++)
+        for(int posIndex = 0; posIndex < snakeLength; posIndex++)
         {
-            if((this.snake.pos[posIndex][0] == x) && (this.snake.pos[posIndex][1] == y))
+            if((snakePos[posIndex][0] == xPos) && (snakePos[posIndex][1] == yPos))
             {
                 /* Position not valid */
                 valid = false;

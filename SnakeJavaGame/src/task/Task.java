@@ -21,11 +21,22 @@ public class Task extends Thread
 
     public Task(Paint paint, Snake snake, Food food, Frame frame)
     {
-        this.currentTask = TypeTask.START;
+        /* Get the objects */
         this.paint = paint;
         this.snake = snake;
         this.food = food;
         this.frame = frame;
+        /* Set initial task */
+        currentTask = TypeTask.START;
+        /* Generate position for the food */
+        this.food.generatePosition(this.snake.pos, this.snake.length);
+        /* Set Snake position */
+        this.paint.setSnakePosition(snake.pos);
+        /* Set Food position */
+        this.paint.setFoodPosition(food.xPos, food.yPos);
+        /* Set snake length */
+        paint.setSnakeLength(snake.length);
+
     }
 
     @Override
@@ -50,26 +61,31 @@ public class Task extends Thread
 
     private void processStartTask()
     {
-        if(this.frame.currentFrame == Frame.FrameType.GAME)
+        /* Wait for the Start Button to be pressed */
+        if(frame.currentFrame == Frame.FrameType.GAME)
         {
-            this.frame.configureGameFrame();
-            this.paint.setWindows(Paint.TypeWindow.GAME);
-            this.currentTask = GAME;
+            frame.configureGameFrame();
+            paint.setWindows(Paint.TypeWindow.GAME);
+            currentTask = GAME;
         }
     }
 
     private void processGameTask()
     {
         /* Set direction */
-        this.snake.setDirection(this.frame.snakeDir);
+        snake.setDirection(frame.snakeDir);
         /* Check snake collision */
         checkSnakeCollision();
         /* Check whether food was eaten */
         checkFoodEaten();
         /* Update snake slots */
-        this.snake.updateSlots();
+        snake.updateSlots();
+        /* Set Snake position */
+        paint.setSnakePosition(snake.pos);
+        /* Set Food position */
+        paint.setFoodPosition(food.xPos, food.yPos);
         /* Repaint */
-        this.paint.repaint();
+        paint.repaint();
     }
 
     private void processEndTask()
@@ -88,33 +104,35 @@ public class Task extends Thread
     private void checkFoodEaten()
     {
         /* Snake Position */
-        int snakeXPos = this.snake.pos[0][0];
-        int snakeYPos = this.snake.pos[0][1];
+        int snakeXPos = snake.pos[0][0];
+        int snakeYPos = snake.pos[0][1];
 
         /* Food Position */
-        int foodXPos = this.food.xPos;
-        int foodYPos = this.food.yPos;
+        int foodXPos = food.xPos;
+        int foodYPos = food.yPos;
 
         /* Check if the position is the same */
         if((snakeXPos == foodXPos) && (snakeYPos == foodYPos))
         {
             /* Increase snake length */
-            this.snake.length++;
+            snake.length++;
+            /* Send snake length */
+            paint.setSnakeLength(snake.length);
             /* Generate new food position */
-            this.food.generatePosition();
+            food.generatePosition(snake.pos, snake.length);
         }
     }
 
     private void checkSnakeCollision()
     {
         /* Snake Position */
-        int snakeXPos = this.snake.pos[0][0];
-        int snakeYPos = this.snake.pos[0][1];
+        int snakeXPos = snake.pos[0][0];
+        int snakeYPos = snake.pos[0][1];
 
-        for(int posIndex = 3; posIndex < this.snake.length; posIndex++)
+        for(int posIndex = 3; posIndex < snake.length; posIndex++)
         {
             /* Check if the position is the same */
-            if((snakeXPos == this.snake.pos[posIndex][0]) && (snakeYPos == snake.pos[posIndex][1]))
+            if((snakeXPos == snake.pos[posIndex][0]) && (snakeYPos == snake.pos[posIndex][1]))
             {
                 /* Increase snake length */
                 System.out.println("GAME OVER");

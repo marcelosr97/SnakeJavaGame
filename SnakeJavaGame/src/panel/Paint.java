@@ -13,14 +13,16 @@ public class Paint extends JComponent
     private Snake snake;
     private Food food;
     private TypeWindow currentWindow;
+    private int snakeLength;
+    private int[][] snakePos;
+    private int xFoodPos;
+    private int yFoodPos;
+
     /* Public */
     public enum TypeWindow {START, GAME, END};
-    public Paint(Snake snake, Food food, Frame frame)
+    public Paint()
     {
         this.currentWindow = TypeWindow.START;
-        this.frame = frame;
-        this.food = food;
-        this.snake = snake;
     }
 
     public void paintComponent(Graphics g)
@@ -38,6 +40,25 @@ public class Paint extends JComponent
         }
     }
 
+    public void setWindows(TypeWindow typeWindow)
+    {
+        currentWindow = typeWindow;
+    }
+
+    public void setSnakeLength(int snakeLength)
+    {
+        this.snakeLength = snakeLength;
+    }
+    public void setSnakePosition(int[][] snakePos)
+    {
+        this.snakePos = snakePos;
+    }
+
+    public void setFoodPosition(int xFoodPos, int yFoodPos)
+    {
+        this.xFoodPos = xFoodPos;
+        this.yFoodPos = yFoodPos;
+    }
     private void printEndWindow(Graphics g)
     {
 
@@ -49,28 +70,22 @@ public class Paint extends JComponent
         /* Set color white */
         g.setColor(Color.WHITE);
         /* Draw border */
-        g.drawRect(this.frame.FRAME_OFFSET,this.frame.FRAME_OFFSET,this.frame.MAX_X, this.frame.MAX_Y);
+        g.drawRect(Frame.FRAME_OFFSET,Frame.FRAME_OFFSET,Frame.MAX_X, Frame.MAX_Y);
         /* Set color green */
         g.setColor(Color.GREEN);
         /* Print snake */
-        for(int posIndex = 0; posIndex < this.snake.length; posIndex++)
+        for(int posIndex = 0; posIndex < snakeLength; posIndex++)
         {
-            g.fillRect(this.snake.pos[posIndex][0], this.snake.pos[posIndex][1], this.snake.SNAKE_WIDTH,
-                    this.snake.SNAKE_HEIGHT);
+            g.fillRect(snakePos[posIndex][0], snakePos[posIndex][1], Snake.SNAKE_WIDTH, Snake.SNAKE_HEIGHT);
         }
         /* Set color red */
         g.setColor(Color.RED);
         /* Print food */
-        g.fillRect(this.food.xPos, this.food.yPos, this.food.FOOD_WIDTH, this.food.FOOD_HEIGHT);
+        g.fillRect(xFoodPos, yFoodPos, Food.FOOD_WIDTH, Food.FOOD_HEIGHT);
     }
 
     private void printStartWindow(Graphics g)
     {
 
-    }
-
-    public void setWindows(TypeWindow typeWindow)
-    {
-        this.currentWindow = typeWindow;
     }
 }

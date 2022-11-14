@@ -10,11 +10,11 @@ public class Main
         /* Create frame object */
         Frame frame = new Frame();
         /* Create snake object */
-        Snake snake = new Snake(frame);
+        Snake snake = new Snake();
         /* Create food object */
-        Food food = new Food(frame, snake);
+        Food food = new Food();
         /* Create paint object */
-        Paint paint = new Paint(snake, food, frame);
+        Paint paint = new Paint();
         /* Configure frame */
         frame.configureFrame(paint);
         /* Create task object */
