@@ -11,24 +11,28 @@ import static panel.Frame.FrameType.START;
 public class Frame extends JFrame implements ActionListener {
     /* Enum */
     public enum FrameType {START, GAME, END}
-
+    /* Constants */
+    private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
     /* Private */
     private Paint paint;
-    private JButton startButton;
+    private JButton startButton = new JButton("START");
+    private JLabel keyInput = new JLabel();
+    private JPanel panel = new JPanel();
     public int snakeDir = KeyEvent.VK_UP;
-    private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
     /* Public */
     public static final int FRAME_OFFSET = 32;
     public static final int MAX_X = 512;
     public static final int MAX_Y = 512;
     public FrameType currentFrame;
-    private static JLabel keyInput = new JLabel();
 
-    public Frame() {
+    public Frame()
+    {
+        super("Snake Game Java");
         currentFrame = START;
     }
 
-    public void configureFrame(Paint paint) {
+    public void configureFrame(Paint paint)
+    {
         /* Set paint object */
         this.paint = paint;
         /* Default frame configuration */
@@ -37,14 +41,15 @@ public class Frame extends JFrame implements ActionListener {
         configureStartFrame();
     }
 
-    private void setDefaultFrameConfiguration() {
-        this.getContentPane().setBackground(Color.BLACK); /* Background color */
+    private void setDefaultFrameConfiguration()
+    {
+        getContentPane().setBackground(Color.BLACK); /* Background color */
         addKeyBindings();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); /* Close operation */
-        this.setVisible(true); /* Show frame */
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); /* Close operation */
+        setVisible(true); /* Show frame */
         /* Set the final size */
-        this.setSize(MAX_X + 2 * FRAME_OFFSET + this.getInsets().left + this.getInsets().right,
-                MAX_Y + 2 * FRAME_OFFSET + this.getInsets().top + this.getInsets().bottom);
+        setSize(MAX_X + 2 * FRAME_OFFSET + getInsets().left + getInsets().right,
+                MAX_Y + 2 * FRAME_OFFSET + getInsets().top + getInsets().bottom);
     }
 
     private void addKeyBindings()
@@ -63,40 +68,53 @@ public class Frame extends JFrame implements ActionListener {
 
     public void configureStartFrame()
     {
-        this.startButton = new JButton("START");
-        this.startButton.addActionListener(this);
-        this.startButton.setFocusable(false);
-        this.add(this.startButton);
-        this.setVisible(true); /* Show frame */
+        startButton.addActionListener(this); /* Add action when button is pressed */
+        startButton.setBackground(Color.WHITE);
+        startButton.setFont(new Font("Arial", Font.PLAIN, 40));
+        startButton.setFocusable(false); /* To not show the border */
+        panel.setLayout(new GridBagLayout());
+        panel.setBackground(Color.BLACK);
+        panel.add(startButton);
+        add(panel);
+        setVisible(true); /* Show frame */
     }
 
 
-    public void configureGameFrame() {
-        this.startButton.setVisible(false); /* Hide button */
-        this.add(this.paint); /* Add snake object */
+    public void configureGameFrame()
+    {
+        panel.setVisible(false); /* Hide button */
+        add(this.paint); /* Add snake object */
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        this.currentFrame = Frame.FrameType.GAME;
+    public void actionPerformed(ActionEvent e)
+    {
+        currentFrame = Frame.FrameType.GAME;
     }
 
-    private class SetDirectionClass extends AbstractAction {
+    private class SetDirectionClass extends AbstractAction
+    {
         int keyEvent;
 
-        SetDirectionClass(int keyEvent) {
+        SetDirectionClass(int keyEvent)
+        {
             this.keyEvent = keyEvent;
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e)
+        {
             if ((keyEvent == KeyEvent.VK_UP) || (keyEvent == KeyEvent.VK_RIGHT)
-                    || (keyEvent == KeyEvent.VK_LEFT) || (keyEvent == KeyEvent.VK_DOWN)) {
+                    || (keyEvent == KeyEvent.VK_LEFT) || (keyEvent == KeyEvent.VK_DOWN))
+            {
                 /* Check whether the following movement is transverse */
-                if ((snakeDir != keyEvent + 2) && (snakeDir != keyEvent - 2)) {
+                if ((snakeDir != keyEvent + 2) && (snakeDir != keyEvent - 2))
+                {
                     snakeDir = keyEvent;
                 }
-            } else {
+            }
+            else
+            {
                 /* Do nothing */
             }
         }

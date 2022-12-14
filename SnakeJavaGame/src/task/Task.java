@@ -16,8 +16,12 @@ public class Task extends Thread
     private Food food;
     private Snake snake;
     private TypeTask currentTask;
+
     /* Public variables */
-    public enum TypeTask{START, GAME, END};
+    public enum TypeTask
+    {START, GAME, END}
+
+    ;
 
     public Task(Paint paint, Snake snake, Food food, Frame frame)
     {
@@ -28,23 +32,19 @@ public class Task extends Thread
         this.frame = frame;
         /* Set initial task */
         currentTask = TypeTask.START;
-        /* Generate position for the food */
-        this.food.generatePosition(this.snake.pos, this.snake.length);
-        /* Set Snake position */
-        this.paint.setSnakePosition(snake.pos);
-        /* Set Food position */
-        this.paint.setFoodPosition(food.xPos, food.yPos);
-        /* Set snake length */
-        paint.setSnakeLength(snake.length);
-
+        /* Generate position for food */
+        this.food.generatePosition(this.snake);
+        /* Update positions in paint */
+        this.paint.updatePositions(this.snake, this.food);
     }
 
     @Override
     public void run()
     {
-        while(true)
+        while (true)
         {
-            switch(currentTask) {
+            switch (currentTask)
+            {
                 case START:
                     processStartTask();
                     break;
@@ -55,14 +55,14 @@ public class Task extends Thread
                     processEndTask();
             }
             /* Sleep */
-            taskSleep(1000/REFRESH_RATE);
+            taskSleep(1000 / REFRESH_RATE);
         }
     }
 
     private void processStartTask()
     {
         /* Wait for the Start Button to be pressed */
-        if(frame.currentFrame == Frame.FrameType.GAME)
+        if (frame.currentFrame == Frame.FrameType.GAME)
         {
             frame.configureGameFrame();
             paint.setWindows(Paint.TypeWindow.GAME);
@@ -74,17 +74,13 @@ public class Task extends Thread
     {
         /* Set direction */
         snake.setDirection(frame.snakeDir);
-        /* Check snake collision */
-        checkSnakeCollision();
-        /* Check whether food was eaten */
-        checkFoodEaten();
-        /* Update snake slots */
+        snake.checkSnakeCollision();
+        if(snake.checkFoodEaten(food))
+        {
+            food.generatePosition(snake);
+        }
         snake.updateSlots();
-        /* Set Snake position */
-        paint.setSnakePosition(snake.pos);
-        /* Set Food position */
-        paint.setFoodPosition(food.xPos, food.yPos);
-        /* Repaint */
+        paint.updatePositions(snake, food);
         paint.repaint();
     }
 
@@ -94,50 +90,12 @@ public class Task extends Thread
 
     private void taskSleep(int time)
     {
-        try {
+        try
+        {
             Thread.currentThread().sleep(time);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e)
+        {
             throw new RuntimeException(e);
-        }
-    }
-
-    private void checkFoodEaten()
-    {
-        /* Snake Position */
-        int snakeXPos = snake.pos[0][0];
-        int snakeYPos = snake.pos[0][1];
-
-        /* Food Position */
-        int foodXPos = food.xPos;
-        int foodYPos = food.yPos;
-
-        /* Check if the position is the same */
-        if((snakeXPos == foodXPos) && (snakeYPos == foodYPos))
-        {
-            /* Increase snake length */
-            snake.length++;
-            /* Send snake length */
-            paint.setSnakeLength(snake.length);
-            /* Generate new food position */
-            food.generatePosition(snake.pos, snake.length);
-        }
-    }
-
-    private void checkSnakeCollision()
-    {
-        /* Snake Position */
-        int snakeXPos = snake.pos[0][0];
-        int snakeYPos = snake.pos[0][1];
-
-        for(int posIndex = 3; posIndex < snake.length; posIndex++)
-        {
-            /* Check if the position is the same */
-            if((snakeXPos == snake.pos[posIndex][0]) && (snakeYPos == snake.pos[posIndex][1]))
-            {
-                /* Increase snake length */
-                System.out.println("GAME OVER");
-                System.exit(0);
-            }
         }
     }
 }

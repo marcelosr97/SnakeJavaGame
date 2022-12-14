@@ -18,7 +18,7 @@ public class Food
     /* Private variables */
     private Random rand = new Random();
 
-    public void generatePosition(int[][] snakePos, int snakeLength)
+    public void generatePosition(Snake snake)
     {
         /* Create flag to check if the position is valid */
         boolean posValid = false;
@@ -28,7 +28,7 @@ public class Food
             xPos = Frame.FRAME_OFFSET + rand.nextInt(UPPER_BOUND)*MAX_POSITION;
             yPos = Frame.FRAME_OFFSET + rand.nextInt(UPPER_BOUND)*MAX_POSITION;
             /* Check is new position is valid */
-            posValid = checkPositionValid(xPos, yPos, snakePos, snakeLength);
+            posValid = checkPositionValid(xPos, yPos, snake.pos, snake.length);
         } while(posValid != true);
 
 

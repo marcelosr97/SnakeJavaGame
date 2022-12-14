@@ -98,4 +98,41 @@ public class Snake
         }
     }
 
+    public void checkSnakeCollision()
+    {
+        /* Snake Position */
+        int snakeXPos = this.pos[0][0];
+        int snakeYPos = this.pos[0][1];
+
+        for(int posIndex = 3; posIndex < this.length; posIndex++)
+        {
+            /* Check if the position is the same */
+            if((snakeXPos == this.pos[posIndex][0]) && (snakeYPos == this.pos[posIndex][1]))
+            {
+                System.out.println("GAME OVER");
+                System.exit(0);
+            }
+        }
+    }
+
+    public boolean checkFoodEaten(Food food)
+    {
+        boolean ret = false;
+        /* Snake Position */
+        int snakeXPos = this.pos[0][0];
+        int snakeYPos = this.pos[0][1];
+
+        /* Food Position */
+        int foodXPos = food.xPos;
+        int foodYPos = food.yPos;
+
+        /* Check if the position is the same */
+        if ((snakeXPos == foodXPos) && (snakeYPos == foodYPos))
+        {
+            /* Increase snake length */
+            this.length++;
+            ret = true;
+        }
+        return ret;
+    }
 }

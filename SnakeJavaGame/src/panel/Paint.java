@@ -45,20 +45,27 @@ public class Paint extends JComponent
         currentWindow = typeWindow;
     }
 
-    public void setSnakeLength(int snakeLength)
+    public void updatePositions(Snake snake, Food food)
+    {
+        setSnakeLength(snake.length);
+        setSnakePosition(snake.pos);
+        setFoodPosition(food.xPos, food.yPos);
+    }
+    private void setSnakeLength(int snakeLength)
     {
         this.snakeLength = snakeLength;
     }
-    public void setSnakePosition(int[][] snakePos)
+    private void setSnakePosition(int[][] snakePos)
     {
         this.snakePos = snakePos;
     }
 
-    public void setFoodPosition(int xFoodPos, int yFoodPos)
+    private void setFoodPosition(int xFoodPos, int yFoodPos)
     {
         this.xFoodPos = xFoodPos;
         this.yFoodPos = yFoodPos;
     }
+
     private void printEndWindow(Graphics g)
     {
 
